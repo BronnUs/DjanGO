@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content%}
+    {% if form.errors %}
+        <p >Ошибка в имени пользователя/пароле. Пожалуйста, попробуйте снова</p>
+    {% endif %}
+    {% if next %}
+  {% if user.is_authenticated %}
+    <p>Вы не имеете доступа для просмотра этой страницы</p>
+  {% else %}
+    <p>Пожалуйста, войдите или создайте аккаунт</p>
+  {% endif %}
+{% endif %}
+<div class="d-flex flex-column w-50 align-items-center border-3 p-4 text-right mx-auto" style="margin-top: 180px;">
+<form method="post" action="{% url 'account:login' %}" class="d-flex flex-column align-items-center">
+{% csrf_token %}
+        <div class="d-flex">
+            <p class="me-3" style="width: 77px;">Никнейм:</p><p> {{form.username}}</p>
+        </div>
+        <div class="d-flex">
+            <p class="me-3" style="width: 77px;">Пароль: </p><p>{{form.password}}</p>
+        </div>
+
+
+<input type="submit" value="Войти" class="btn-alert my-3"  />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+</div>
+
+{% endblock %}

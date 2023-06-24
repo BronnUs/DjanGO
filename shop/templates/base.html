@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% block title %}<title>Local Library</title>{% endblock %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    {% load static %}
+</head>
+
+<body class="h-100 d-grid" style="grid-template-columns: 220px 800px; position: absolute;">
+        <div id="sidebar" class="nav nav-pills flex-column mb-auto bg-secondary" style="height :100%; width: 200px;">
+        <div style="position: fixed; width: 200px;">
+        <ul class="d-flex align-items-center justify-content-center text-center d-flex flex-column p-0 w-100" style="list-style-type: none;">
+            {%if user.is_authenticated%}
+            <li class="my-4 mx-auto">
+                <a class="text-decoration-none text-white" href="{% url 'account:profile_pg' username=request.user.username%}">Профиль</a>
+            </li> 
+            <li class="my-4 mx-auto">
+                <a class="text-decoration-none text-white" href="{% url 'account:logout'%}">Выйти</a>
+            </li> 
+            <li class="d-flex mx-auto my-2 w-100 text-center align-items-center btn-alert justify-content-center " >
+                <a href="{% url 'basket:basket' %}" class="my-2 text-decoration-none text-white">Корзина</a>
+            </li>
+            {%else%}
+            <li class="my-4 mx-auto">
+                <a  class="text-decoration-none text-white" href="{% url 'account:login'%}">Войти</a>
+            </li>
+            <li  class="my-4 mx-auto">
+                <a  class="text-decoration-none text-white" href="{% url 'account:register'%}">Зарегистрироваться</a>
+            </li>
+            {%endif%}
+                <li class="my-4 mx-auto">
+                    <a  class="text-decoration-none text-white" href="{% url 'shop:index'%}">Каталог</a>
+                </li>
+                {%if user.is_superuser%}
+                <li class="my-4 mx-auto">
+                    <a  class="text-decoration-none text-white" href="/admin/">Админ</a>
+                </li>
+                {%endif%}
+                <li class="my-4 mx-auto">
+                    <a  class="text-decoration-none text-white" href="{% url 'shop:contacts'%}">Контакты</a>
+                </li>
+                
+                <li  class="mt-4 mx-auto">
+                    <a  class="text-decoration-none text-white">Поиск</a>
+                </li>
+                <form action="{% url 'shop:searchbar' %}"  class="d-flex flex-column align-items-center  w-100 my-3">
+                    
+                    <input name="searchbar" type="text" placeholder="Search..." style="width: 50%;">
+                </form>
+            </div>
+        </ul>
+    </div>
+    <div>
+        
+                {% block content %}{% endblock %}
+                {% block pagination %}
+                {%if is_paginated%}
+                <div class = "pagination">
+                    <span class="page-links">
+                        {% if page_obj.has_previous%}
+                        <a href="{{request.path}}?page={{page_obj.previous_page_number}}">Prev</a>
+                        {%endif%}
+                        <span>
+                              &nbsp; Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}&nbsp;
+                        </span>
+                        {% if page_obj.has_next%}
+                        <a href="{{request.path}}?page={{page_obj.next_page_number}}">Next</a>
+                        {%endif%}
+                    </span>
+                </div>
+                {%endif%}
+
+
+                {% endblock %}
+            </div>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% extends "base.html"%}
+
+{% block content %}
+<div class="d-grid" style="grid-template-columns: 200px 10vw;">
+    <div style="position: fixed; margin-top: 100px;">
+    <div id="navbar" class="nav nav-pills flex-column mb-auto w-100 align-items-center my-4 justify-content-center">
+        <ul class="d-flex flex-column justify-content-between bg-secondary ms-5 p-0">
+            <li class="d-inline mx-5 my-4" {% if not company %} class="selected d-inline mx-5"{% endif %}>
+                <a href="{% url "shop:index" %}" class="btn-alert text-dark px-3 py-1" style="text-decoration: none;">Все</a>
+            </li>
+            {% for c in companies %}   
+                <li class="d-inline mx-5 my-4" {% if company.slug == c.slug %} class="selected d-inline text-white mx-5" {% endif %}>
+                    <a href="{{ c.get_absolute_url }}" class="btn-alert text-dark px-3 py-1" style="text-decoration: none;">{{ c.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+    <div class="d-flex flex-column mx-5 justify-content-between  ">
+        
+        <div class="d-flex my-5" style="flex-wrap: wrap; width: 70vw;margin-left: 250px;">
+            {% for product in products %}
+            <br/>
+                <div class="item  d-flex m-3 border-2 flex-column  align-items-center" style="width: 250px;height: 200px;">
+                    <a href="{{ product.get_absolute_url }}"  class="w-25 text-center align-items-center text-decoration-none text-secondary d-flex flex-column mx-5"><p style="width: 200px;"><img src="{{product.image.url}}" style="max-height: 100px;">{{product.character.title}} {{ product.name }}</p><br/>{{ product.price }} Р</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="d-flex flex-column border-3 align-items-center text-right mx-auto" style="margin-top: 130px; width: 70vw">
+        <p>Оформление заказа:</p>
+        <form action="." method="post" class="d-flex flex-column my-4">
+            {% csrf_token %}
+            <div class="d-grid" style="grid-template-columns: 150px 700px; align-items:center ; justify-content: center;">
+            {{form.as_p}}
+            </div>
+            <input type="submit" value="Заказать" class="btn-alert">
+        </form>
+    </div> 
+{% endblock %}

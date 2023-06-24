@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content%}
+    <div class="d-flex align-items-center" style="margin-left: 20vw;">
+    <div class="d-flex flex-column mx-auto p-5 border-2 my-5 " style="width: 60%;">
+        <p>Юзернейм:  {%if user.username%} {{user.username}} {% else %} Не указана {%endif%}</p>
+        <p>E-mail: {%if user.email%} {{user.email}} {% else %} Не указана {%endif%}</p>
+        <p>Дата рождения: {%if profile.birth_date%} {{profile.birth_date}} {% else %} Не указана {%endif%}</p>
+        <p>Номер:{%if profile.number %} {{profile.number}} {% else %} Не указан{%endif%}</p>
+        <p>Имя:{%if user.first_name %} {{user.first_name}} {% else %} Не указано {%endif%}</p>
+        <p>Фамилия:{%if user.last_name %} {{user.last_name}} {% else %} Не указана {%endif%}</p>
+        <a class="btn-alert text-decoration-none text-center p-1" href="{% url 'account:change' %}"> Редактировать </a>
+        
+    </div>
+</div>
+    
+{% endblock %}

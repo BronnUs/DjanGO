@@ -1,0 +1,15 @@
+{%extends "base.html"%}
+
+{%block content%}
+    <div class="d-flex flex-column mx-5 align-items-center " style="width: 80vw;">
+            <h3 class="my-5">Результаты поиска по запросу {{req}}</h3>
+        <div class="d-flex my-5 w-100" style="flex-wrap: wrap;">
+            {% for result in results %}
+            <br/>
+                <div class="item  d-flex m-3 border-2 flex-column  align-items-center" style="width: 250px;height: 200px;">
+                    <a href="{{ product.get_absolute_url }}"  class="w-25 text-center align-items-center text-decoration-none text-secondary d-flex flex-column mx-5"><p style="width: 200px;"><img src="{{result.image.url}}" style="max-height: 100px;">{{result.character.title}} {{ result.name }}</p><br/>{{ result.price }} Р</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{%endblock%}
